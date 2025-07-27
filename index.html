@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Stage - Investment Pitch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #ff7b7b 0%, #ffa726 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff7b7b 0%, #ffa726 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '>';
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo {
+            width: 360px;
+            height: 120px;
+            margin: 0 auto 20px auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 {
+            font-size: 64px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 22px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .section {
+            padding: 25px 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .section-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        
+        .executive { background: #8e44ad; }
+        .investment { background: #3498db; }
+        .product { background: #95a5a6; }
+        .breakdown { background: #f39c12; }
+        .timeline { background: #e74c3c; }
+        .market { background: #e74c3c; }
+        .features { background: #27ae60; }
+        .why { background: #f39c12; }
+        .partner { background: linear-gradient(135deg, #ff7b7b 0%, #ffa726 100%); }
+        
+        .investment-highlight {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .product-images {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .product-image {
+            flex: 1;
+            height: 240px;
+            background: #2c3e50;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .header-video {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+            background: #2c3e50;
+        }
+        
+        .center-video {
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+            background: #2c3e50;
+        }
+        
+        .product-image::after {
+            content: 'Product Image';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .product-image.no-image::after {
+            display: block;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .feature-item h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .feature-item p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .investment-breakdown {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .investment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .investment-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .investment-equity {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .investment-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .phase {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .phase h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .phase ul {
+            list-style: none;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .phase li {
+            margin-bottom: 5px;
+        }
+        
+        .timeline-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .timeline-item h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-item p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .market-item h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .market-item p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #ff7b7b 0%, #ffa726 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .cta-section p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .investor-terms {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .investor-terms h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        .investor-terms ul {
+            list-style: none;
+            font-size: 12px;
+        }
+        
+        .investor-terms li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .investor-terms li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Simple page load confirmation
+        window.onload = function() {
+            console.log('Story Stage Pitch Deck Loaded');
+            console.log('Contact information hardcoded and ready');
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="logo.jpg" alt="Story Stage Logo" class="logo" 
+                 onerror="this.style.display='none';">
+            <h1>Story Stage</h1>
+            <p>Transforming Hospitality through Immersive Digital Experiences<br>
+            Next-Generation Interactive Entertainment Systems</p>
+            
+            <video class="header-video" controls autoplay muted loop>
+                <source src="video1.mp4" type="video/mp4">
+                <div style="color: white; text-align: center; line-height: 300px;">Video 1 - Feature Overview</div>
+            </video>
+        </div>
+        
+        <!-- Executive Summary -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon executive"></div>
+                Executive Summary
+            </div>
+            <p><strong>FIRST-OF-ITS-KIND BREAKTHROUGH:</strong> Story Stage is a revolutionary fusion of 70-billion parameter AI, advanced robotics, and immersive storytelling that transforms any doll, action figure, or character into a living, interactive companion. Our breakthrough technology recognizes placed objects and instantly brings them to life with personalized conversations, articulated movements, and enchanting environmental effects.</p>
+            
+            <p style="margin-top: 15px;"><strong>THE MAGIC:</strong> Guests place any character on our intelligent stage platform - dolls, action figures, collectibles - and watch as advanced AI (comparable to ChatGPT-4) animates them with lifelike conversations, synchronized arm movements, walking, waving, and immersive sound/lighting effects. Characters can be removed and held while remaining interactive, creating an unprecedented tactile AI experience.</p>
+            
+            <div class="investment-highlight">
+                🚀 Investment Opportunity - $60,000 | Revolutionary AI-Powered Character Animation
+            </div>
+        </div>
+        
+        <!-- Product Analysis -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon product"></div>
+                Revolutionary Technology - Bringing Objects to Life
+            </div>
+            
+            <div class="product-images">
+                <div class="product-image">
+                    <img src="image1.jpg" alt="Story Stage AI Platform - Object Recognition System" 
+                         onerror="this.style.display='none'; this.parentElement.classList.add('no-image');">
+                </div>
+                <div class="product-image">
+                    <img src="image2.jpg" alt="Interactive Characters - AI-Powered Animation" 
+                         onerror="this.style.display='none'; this.parentElement.classList.add('no-image');">
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 20px; margin-top: 20px;">
+                <div style="flex: 1;">
+                    <h4>🤖 AI CHARACTER RECOGNITION (PHASE 1 - 60%)</h4>
+                    <p><strong>Breakthrough Technology:</strong> Advanced computer vision instantly identifies any placed character (dolls, action figures, collectibles) and activates corresponding AI personality with 70-billion parameter conversational intelligence. <strong>Features:</strong> Real-time object recognition, character-specific dialogue, articulated arm/hand movements, walking animations, environmental sound effects, and removable interactive play.</p>
+                </div>
+                <div style="flex: 1;">
+                    <h4>🎭 IMMERSIVE EXPERIENCE PLATFORM (PHASE 2 - 55%)</h4>
+                    <p><strong>Complete Entertainment System:</strong> Multi-character support allows swapping personalities instantly. External lighting creates magical atmospheres, synchronized music enhances storytelling, and tactile interaction enables holding characters while they remain responsive. <strong>Innovation:</strong> First entertainment system to combine physical object manipulation with advanced AI conversation - creating unprecedented emotional connections.</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <video class="center-video" controls autoplay muted loop>
+                    <source src="video2.mp4" type="video/mp4">
+                    <div style="color: #666; text-align: center; line-height: 280px;">Video 2 - Live Character Animation Demo</div>
+                </video>
+            </div>
+        </div>
+        
+        <!-- Investment Breakdown -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon breakdown"></div>
+                Investment Breakdown & Multiple Revenue Streams
+            </div>
+            
+            <div class="investment-breakdown">
+                <div class="investment-header">
+                    <div class="investment-amount">$60,000</div>
+                    <div class="investment-equity">15% Equity</div>
+                </div>
+                
+                <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #3498db;">
+                    <h4 style="color: #2980b9; margin-bottom: 10px;">💰 Revenue Model - Beyond Hardware Sales</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; font-size: 12px;">
+                        <div><strong>Unit Sales:</strong> $2,500-$5,000 per Story Stage system</div>
+                        <div><strong>Monthly Subscriptions:</strong> $29-$99/month for AI content updates</div>
+                        <div><strong>Character Licensing:</strong> $15-$50 per premium character personality</div>
+                        <div><strong>Enterprise Memberships:</strong> $500-$2,000/month for venue management tools</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 12px; color: #2980b9;"><strong>Projected Recurring Revenue:</strong> 60% of total income from subscriptions and licensing within 18 months</p>
+                </div>
+                
+                <div class="investor-terms">
+                    <h4>Investor Terms & Protections</h4>
+                    <ul>
+                        <li><strong>Preferred Shares:</strong> Liquidation preference - investors recover investment first</li>
+                        <li><strong>Anti-dilution Protection:</strong> Maintain ownership percentage in future rounds</li>
+                        <li><strong>Revenue Sharing Alternative:</strong> 15% of gross revenue until 3x return ($180,000)</li>
+                        <li><strong>Board Observer Rights:</strong> Monthly reporting and strategic visibility</li>
+                        <li><strong>Right of First Refusal:</strong> Priority investment in future funding rounds</li>
+                        <li><strong>Performance Bonus:</strong> Additional 2% equity if $1M revenue achieved in Year 2</li>
+                    </ul>
+                </div>
+                
+                <div class="investment-phases">
+                    <div class="phase">
+                        <h4>Phase 1: Development Investment ($30,000)</h4>
+                        <ul>
+                            <li><strong>Equity:</strong> 7% for proof of concept completion</li>
+                            <li><strong>Hardware Development:</strong> $20,000 - Advanced sensory integration, manufacturing testing</li>
+                            <li><strong>Software Development:</strong> $8,000 - Platform optimization, user interface enhancement</li>
+                            <li><strong>Milestones:</strong> Complete beta version, secure 10 pilot customers</li>
+                            <li><strong>Timeline:</strong> 6 months</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="phase">
+                        <h4>Phase 2: Production Setup ($30,000)</h4>
+                        <ul>
+                            <li><strong>Equity:</strong> 8% for manufacturing and market entry</li>
+                            <li><strong>Production Equipment:</strong> $18,000 - Manufacturing capabilities, quality systems</li>
+                            <li><strong>Marketing & Sales:</strong> $8,000 - Trade shows, sales materials, customer acquisition</li>
+                            <li><strong>Inventory:</strong> $4,000 - Initial unit production run</li>
+                            <li><strong>Milestones:</strong> Production capability, first 100 units manufactured</li>
+                            <li><strong>Timeline:</strong> 8 months</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Development Timeline -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon timeline"></div>
+                Development Timeline
+            </div>
+            
+            <div class="timeline-item">
+                <h4>Month 1-3: Product Development</h4>
+                <p>Complete hardware assembly, software development, security applications, design, aesthetic architectural development</p>
+            </div>
+            
+            <div class="timeline-item">
+                <h4>Month 3-6: Prototype & Engineering</h4>
+                <p>Finalize final manufacturing, detailed fabrication specifications, finalize software development</p>
+            </div>
+            
+            <div class="timeline-item">
+                <h4>Month 7-9: Testing & Quality Control</h4>
+                <p>Complete field test final components, establish quality relationships, finley review manufacturing documentation</p>
+            </div>
+            
+            <div class="timeline-item">
+                <h4>Month 10-12: Production & Market Entry</h4>
+                <p>First 100 units production deployment, initial orders processing/invoicing, client demonstrations live applications</p>
+            </div>
+            
+            <div class="timeline-item">
+                <h4>Month 13-18: Scale & Expansion</h4>
+                <p>Market penetration and growth, improve manufacturing efficiency, develop distribution network and affiliate integrations</p>
+            </div>
+            
+            <div class="timeline-item">
+                <h4>Month 19-24: Market Dominance</h4>
+                <p>Establish new market opportunities, continuing the new infrastructure, improve ROI efficiency and performance</p>
+            </div>
+        </div>
+        
+        <!-- Market Opportunity -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon market"></div>
+                Market Opportunity - Perfect AI Timing
+            </div>
+            
+            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #f39c12;">
+                <h4 style="color: #856404; margin-bottom: 10px;">🚀 UNPRECEDENTED MARKET TIMING</h4>
+                <p style="font-size: 13px; color: #856404;">The explosive growth of AI (ChatGPT reaching 100M users in 2 months) creates massive demand for tangible AI experiences. Story Stage is positioned as the FIRST physical AI entertainment system, capturing early-mover advantage in a market hungry for interactive AI applications.</p>
+            </div>
+            
+            <div class="market-grid">
+                <div class="market-item">
+                    <h4>Target Markets</h4>
+                    <p><strong>Family Entertainment:</strong> Theme parks, children's museums, experience centers seeking cutting-edge attractions<br>
+                    <strong>Luxury Hospitality:</strong> High-end hotels creating unforgettable guest experiences<br>
+                    <strong>Retail Showrooms:</strong> Toy stores, collectible shops, flagship stores with interactive displays<br>
+                    <strong>Educational Facilities:</strong> Museums, learning centers using AI for interactive education</p>
+                </div>
+                
+                <div class="market-item">
+                    <h4>Competitive Advantages</h4>
+                    <p><strong>🎯 First-to-Market:</strong> No competitors in physical AI character animation<br>
+                    <strong>💰 Multiple Revenue Streams:</strong> Hardware + subscriptions + licensing = recurring income<br>
+                    <strong>🤖 AI Revolution Timing:</strong> Riding the AI wave with tangible applications<br>
+                    <strong>🧸 Universal Appeal:</strong> Works with ANY character - unlimited content possibilities<br>
+                    <strong>🔄 Network Effects:</strong> More characters = more value = more subscribers</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <h4 style="color: #2c3e50; margin-bottom: 10px;">Market Size & Growth Potential</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div>
+                        <p><strong>AI Entertainment:</strong> $12.8B market growing 25% annually</p>
+                    </div>
+                    <div>
+                        <p><strong>Interactive Toys:</strong> $109B market, smart toys growing 15% yearly</p>
+                    </div>
+                    <div>
+                        <p><strong>Expected ROI:</strong> 27-30% average investor return within 5-7 years</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Features -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon features"></div>
+                Revolutionary Features - Breakthrough AI Technology
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>🤖 70-Billion Parameter AI Brain</h4>
+                    <p>Advanced conversational AI comparable to ChatGPT-4, delivering natural dialogue, character-specific personalities, and adaptive storytelling that learns from each interaction</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>👁️ Instant Object Recognition</h4>
+                    <p>Computer vision instantly identifies any placed character and activates corresponding AI personality - works with dolls, action figures, collectibles, custom characters</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>🦾 Articulated Movement System</h4>
+                    <p>Synchronized arm movements, hand gestures, walking animations, and head positioning create lifelike character interactions that respond to conversation context</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>🎭 Multi-Character Support</h4>
+                    <p>Swap characters instantly for new personalities and stories. Multiple characters can interact simultaneously, creating dynamic group conversations and adventures</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>✋ Tactile Interaction</h4>
+                    <p>BREAKTHROUGH FEATURE: Characters remain interactive when removed from stage. Hold, carry, and play with AI-powered characters anywhere while maintaining conversation</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>🌟 Immersive Environment</h4>
+                    <p>External lighting effects, synchronized music, environmental sounds, and atmospheric effects create magical, enchanting experiences that enhance storytelling</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Why Invest Now -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon why"></div>
+                Why Invest Now? - Once-in-a-Lifetime Opportunity
+            </div>
+            
+            <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #3498db;">
+                <h4 style="color: #2980b9; margin-bottom: 10px;">⚡ PERFECT STORM OF OPPORTUNITY</h4>
+                <p style="font-size: 13px; color: #2980b9;">The AI revolution is happening NOW. While others focus on software, Story Stage delivers the first tangible AI experience that people can touch, hold, and emotionally connect with. This is the iPhone moment for physical AI interaction.</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>🚀 AI Revolution Timing</h4>
+                    <p>Riding the explosive AI wave with the FIRST physical AI entertainment system. Market demand is proven - we're just waiting to fulfill it with breakthrough technology</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>💡 Breakthrough Innovation</h4>
+                    <p>Fusion of advanced robotics, 70-billion parameter AI, and object recognition creates an entirely new product category with zero direct competition</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>📈 Multiple Revenue Streams</h4>
+                    <p>Hardware sales + monthly subscriptions + character licensing + enterprise memberships = predictable, scalable, recurring revenue model</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>🎯 Proven Market Demand</h4>
+                    <p>Family entertainment venues, hotels, and retailers are actively seeking AI-powered attractions. Our beta demos generate immediate purchase interest</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Partner CTA -->
+        <div class="cta-section">
+            <h2>🤝 Join the AI Revolution - Partner with Us</h2>
+            <p><strong>BREAKTHROUGH OPPORTUNITY:</strong> Story Stage represents the convergence of three massive trends: AI explosion, experiential entertainment, and subscription economy. We're not just building a product - we're creating an entirely new industry category.</p>
+            <br>
+            <p><strong>This is your chance to be part of the next major breakthrough in AI application - the first system to make artificial intelligence truly tangible, emotional, and magical.</strong></p>
+            <br>
+            <p><strong>Contact us today to schedule a live demonstration and secure your position in the AI entertainment revolution.</strong></p>
+            <br>
+            <div>
+                <strong>Donald Dixon</strong> | 📞 +82 10 6611 1008 | 📧 creative.robots.dixon@gmail.com<br>
+                <strong>Steven Wee</strong> | 📞 +65 9489 4213 | 📧 stevenwee2010@yahoo.com.sg
+            </div>
+        </div>
+    </div>
+</body>
+</html>
