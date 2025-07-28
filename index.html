@@ -18,6 +18,29 @@
             min-height: 100vh;
             padding: 20px;
         }
+
+        /* --- STYLES FOR THE GLOBAL MUTE BUTTON --- */
+        #globalMuteButton {
+            position: fixed; /* Stays in place when you scroll */
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000; /* Stays on top of everything */
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #ff7b7b;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background-color 0.2s;
+        }
+
+        #globalMuteButton:hover {
+            background-color: #e66a6a;
+        }
+        /* --- END OF BUTTON STYLES --- */
         
         .container {
             max-width: 800px;
@@ -154,7 +177,7 @@
             display: block;
             border-radius: 8px;
             background: #2c3e50;
-            border: 0; /* Add this to remove the default iframe border */
+            border: 0; 
         }
         
         .product-image::after {
@@ -332,15 +355,11 @@
             font-weight: bold;
         }
     </style>
-    <script>
-        // Simple page load confirmation
-        window.onload = function() {
-            console.log('Story Stage Pitch Deck Loaded');
-            console.log('Contact information hardcoded and ready');
-        };
-    </script>
 </head>
 <body>
+    <!-- THE GLOBAL MUTE BUTTON -->
+    <button id="globalMuteButton">🔊 Unmute Audio</button>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
@@ -350,9 +369,10 @@
             <p>Transforming Hospitality through Immersive Digital Experiences<br>
             Next-Generation Interactive Entertainment Systems</p>
             
-            <video class="header-video" controls autoplay muted loop>
+            <!-- VIDEO 1: This video is always muted and looping. It is decorative and not controlled by the button. -->
+            <video class="header-video" autoplay muted loop playsinline>
                 <source src="video1.mp4" type="video/mp4">
-                <div style="color: white; text-align: center; line-height: 300px;">Video 1 - Feature Overview</div>
+                Your browser does not support the video tag.
             </video>
         </div>
         
@@ -401,14 +421,8 @@
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <!-- ==== THIS IS THE CORRECTED CODE BLOCK ==== -->
-                <iframe class="center-video" 
-                        src="https://www.youtube.com/embed/NkcbyVLVk-0?playlist=NkcbyVLVk-0&loop=1&autoplay=1&mute=1&controls=0&rel=0" 
-                        title="YouTube video player" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                </iframe>
-                <!-- ============================================= -->
+                <!-- VIDEO 2 (YOUTUBE): This is now just a placeholder div. JavaScript will create the player inside it. -->
+                <div id="youtube-player" class="center-video"></div>
             </div>
         </div>
         
@@ -650,5 +664,61 @@
             </div>
         </div>
     </div>
+
+    <!-- JAVASCRIPT SECTION -->
+    <!-- 1. This script loads the YouTube Iframe Player API code. -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        // --- GLOBAL VARIABLES ---
+        let youtubePlayer; // This will hold the YouTube player object.
+        let isMuted = true; // The initial state for our page audio is MUTED.
+
+        /**
+         * 2. This function is required by the YouTube API. 
+         *    It automatically runs once the API script is loaded.
+         */
+        function onYouTubeIframeAPIReady() {
+            youtubePlayer = new YT.Player('youtube-player', {
+                height: '280',
+                width: '500',
+                videoId: 'NkcbyVLVk-0', // The ID of your YouTube video
+                playerVars: {
+                    'autoplay': 1,    // Autoplay the video
+                    'loop': 1,        // Loop the video
+                    'playlist': 'NkcbyVLVk-0', // Required for looping a single video
+                    'controls': 1,    // Show the standard YouTube controls
+                    'mute': 1         // Start the video muted
+                },
+                events: {
+                    // You can add more events here if needed, like 'onReady'
+                }
+            });
+        }
+
+        // --- MUTE BUTTON LOGIC ---
+        // 3. Get the button from the page.
+        const globalMuteButton = document.getElementById('globalMuteButton');
+
+        // 4. Add a click listener to the button.
+        globalMuteButton.addEventListener('click', function() {
+            // Toggle the muted state
+            isMuted = !isMuted;
+
+            if (isMuted) {
+                // If we are now muted...
+                if (youtubePlayer && typeof youtubePlayer.mute === 'function') {
+                    youtubePlayer.mute(); // Mute the YouTube player
+                }
+                globalMuteButton.textContent = '🔊 Unmute Audio'; // Update button text
+            } else {
+                // If we are now unmuted...
+                if (youtubePlayer && typeof youtubePlayer.unMute === 'function') {
+                    youtubePlayer.unMute(); // Unmute the YouTube player
+                }
+                globalMuteButton.textContent = '🔇 Mute Audio'; // Update button text
+            }
+        });
+    </script>
 </body>
 </html>
